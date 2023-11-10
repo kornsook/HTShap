@@ -109,7 +109,7 @@ for i in range(len(shap_values.data)):
     data['tokens'] = shap_values.data[i]
     data['attributions'] = shap_values.values[i]
     res['records'].append(data)
-with open(f"{result_path}/{args.task_name}.json", "w") as outfile: 
+with open(f"{dict_path}/{args.task_name}.json", "w") as outfile: 
     json.dump(res, outfile)
     
 html = shap.plots.text(shap_values[:, :, 1], display=False)
