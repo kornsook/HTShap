@@ -104,10 +104,10 @@ res = {'records': []}
 for i in range(len(shap_values.data)):
     data = {}
     data['text'] = df['text'][i]
-    data['label'] = df['label'][i]
-    data['post_id'] = df['post_id'][i]
-    data['tokens'] = shap_values.data[i]
-    data['attributions'] = shap_values.values[i]
+    data['label'] = int(df['label'][i])
+    data['post_id'] = int(df['post_id'][i])
+    data['tokens'] = shap_values.data[i].tolist()
+    data['attributions'] = shap_values.values[i].tolist()
     res['records'].append(data)
 with open(f"{dict_path}/{args.task_name}.json", "w") as outfile: 
     json.dump(res, outfile)
