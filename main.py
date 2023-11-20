@@ -28,7 +28,7 @@ parser.add_argument("--mask-token", type=str, help="Mask token", default="<mask>
 parser.add_argument("--task-name", type=str, help="Name of this task")
 
 args = parser.parse_args()
-device = args.device
+device = torch.device(args.device)
 
 
 class model_wrapper(torch.nn.Module):
@@ -92,14 +92,12 @@ if(args.data_type == "pandas"):
     df = pd.read_json(data_path)
 elif(args.data_type == "Dataset"):
     df = Dataset.from_json(data_path).to_pandas()
-    
 selected_post_text = list(df['text'])
 selected_post_label = list(df['label'])
 
 masker = Text(tokenizer, mask_token=args.mask_token)
 explainer = shap.Explainer(model, masker)
 shap_values = explainer(selected_post_text)
-
 res = {'records': []}
 for i in range(len(shap_values.data)):
     data = {}
@@ -111,7 +109,6 @@ for i in range(len(shap_values.data)):
     res['records'].append(data)
 with open(f"{dict_path}/{args.task_name}.json", "w") as outfile: 
     json.dump(res, outfile)
-    
 html = shap.plots.text(shap_values[:, :, 1], display=False)
 f = open(f"{html_path}/{args.task_name}.html", "w")
 f.write(html)
