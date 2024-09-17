@@ -109,10 +109,10 @@ for i in range(len(shap_values.data)):
     res['records'].append(data)
 with open(f"{dict_path}/{args.task_name}.json", "w") as outfile: 
     json.dump(res, outfile)
-html = shap.plots.text(shap_values[:, :, 1], display=False)
-f = open(f"{html_path}/{args.task_name}.html", "w")
-f.write(html)
-f.close()
+#html = shap.plots.text(shap_values[:, :, 1], display=False)
+#f = open(f"{html_path}/{args.task_name}.html", "w")
+#f.write(html)
+#f.close()
 
-shap.plots.bar(shap_values[0, :, 1], max_display=20, show=False)
-plt.savefig(f"{figure_path}/{args.task_name}.pdf")
+#shap.plots.bar(shap_values[0, :, 1], max_display=20, show=False)
+#plt.savefig(f"{figure_path}/{args.task_name}.pdf")
